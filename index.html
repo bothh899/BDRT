@@ -7,49 +7,37 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Happy Birthday Narita!</title>
     <style>
-        @tailwind base;
-        @tailwind components;
-        @tailwind utilities;
-
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@400;600;700&display=swap');
 
         :root {
             --background: 0 0% 100%;
             --foreground: 222.2 84% 4.9%;
-
             --card: 0 0% 100%;
             --card-foreground: 222.2 84% 4.9%;
-
             --popover: 0 0% 100%;
             --popover-foreground: 222.2 84% 4.9%;
-
             --primary: 341 100% 76%;
             /* #ff85a2 */
             --primary-foreground: 210 40% 98%;
-
             --secondary: 327 100% 83%;
             /* #ffa8d3 */
             --secondary-foreground: 222.2 47.4% 11.2%;
-
             --accent: 255 100% 78%;
             /* #a991ff */
             --accent-foreground: 222.2 47.4% 11.2%;
-
             --muted: 210 40% 96.1%;
             --muted-foreground: 215.4 16.3% 46.9%;
-
             --destructive: 0 84.2% 60.2%;
             --destructive-foreground: 210 40% 98%;
-
             --border: 214.3 31.8% 91.4%;
             --input: 214.3 31.8% 91.4%;
             --ring: 222.2 84% 4.9%;
-
             --radius: 0.5rem;
-
             --light: 0 0% 97%;
             --dark: 207 13% 21%;
             --gradient: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+            --vh: 1vh;
+            /* Dynamic viewport height variable */
         }
 
         @layer base {
@@ -68,14 +56,15 @@
                 color: hsl(var(--dark));
                 overflow-x: hidden;
                 min-height: 100vh;
+                /* Fallback */
+                min-height: calc(var(--vh, 1vh) * 100);
                 width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
 
                 /* Improved iOS viewport handling */
-                padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem);
-                box-sizing: border-box;
+                padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 
                 /* Prevent iOS text size adjustment */
                 -webkit-text-size-adjust: 100%;
@@ -83,43 +72,19 @@
                 /* Fix for iOS momentum scrolling */
                 -webkit-overflow-scrolling: touch;
 
-                /* iPhone notch handling */
-                padding-top: max(1rem, env(safe-area-inset-top));
-                padding-right: max(1rem, env(safe-area-inset-right));
-                padding-bottom: max(1rem, env(safe-area-inset-bottom));
-                padding-left: max(1rem, env(safe-area-inset-left));
-
                 /* Prevent iOS pinch zoom */
                 touch-action: pan-x pan-y;
             }
         }
 
-        @media screen and (max-width: 428px) {
-
-            /* iPhone 13 Pro Max width is 428px */
-            body {
-                font-size: 16px;
-                /* Ensure readable text size */
-                align-items: center;
-                /* Center content on small screens */
-            }
-        }
-
-        @media screen and (max-width: 390px) {
-
-            /* iPhone 13/14 width is 390px */
-            body {
-                padding: max(0.5rem, env(safe-area-inset-top)) max(0.5rem, env(safe-area-inset-right)) max(0.5rem, env(safe-area-inset-bottom)) max(0.5rem, env(safe-area-inset-left));
-            }
-        }
-
-        @supports (-webkit-touch-callout: none) {
-
-            /* iOS-specific fixes */
-            body {
-                /* Prevent content from going under the home indicator on iPhone X and newer */
-                margin-bottom: env(safe-area-inset-bottom);
-            }
+        /* Universal base responsive rules */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
         }
 
         .background {
@@ -128,41 +93,16 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            /* Account for iPhone's safe areas */
-            width: calc(100vw + env(safe-area-inset-left) + env(safe-area-inset-right));
-            height: calc(100vh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
-            margin-left: calc(-1 * env(safe-area-inset-left));
-            margin-top: calc(-1 * env(safe-area-inset-top));
+            height: calc(var(--vh, 1vh) * 100);
             background: linear-gradient(to bottom right, #796e6e, #921a92);
             z-index: -2;
-
-            /* Ensure the background extends under the notch and home indicator */
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            box-sizing: border-box;
 
             /* Fix for iOS rendering */
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
         }
 
-        @supports (-webkit-touch-callout: none) {
-
-            /* iOS-specific fixes */
-            .background {
-                /* Handle iPhone's notch and home indicator areas */
-                padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 1rem;
-            text-align: center;
-            position: relative;
-            margin-top: env(safe-area-inset-top, 0);
-        }
-
+        /* Birthday text and date */
         .birthday-text {
             font-size: clamp(1.2rem, 5vw, 2.5rem);
             font-weight: 800;
@@ -185,10 +125,11 @@
             animation: fadeIn 1s forwards 0.5s;
         }
 
+        /* Cake container with responsive sizing */
         .cake-container {
             position: relative;
-            width: min(200px, 70vw);
-            height: min(200px, 70vw);
+            width: min(200px, 50vw);
+            height: min(200px, 50vw);
             margin: 0 auto 2rem;
             perspective: 1000px;
             cursor: pointer;
@@ -213,13 +154,14 @@
             transform: rotateY(15deg) rotateX(5deg);
         }
 
+        /* Cake elements using percentages for better responsiveness */
         .plate {
             position: absolute;
             width: 75%;
-            height: 20px;
+            height: 10%;
             border-radius: 50%;
             background: #f0f0f0;
-            bottom: 20px;
+            bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -228,9 +170,9 @@
         .cake-bottom {
             position: absolute;
             width: 58%;
-            height: 60px;
+            height: 30%;
             background: linear-gradient(to right, #ffb8d9, #ffccea);
-            bottom: 40px;
+            bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 15px 15px 5px 5px;
@@ -240,9 +182,9 @@
         .cake-middle {
             position: absolute;
             width: 50%;
-            height: 50px;
+            height: 25%;
             background: linear-gradient(to right, #b8d7ff, #c9e4ff);
-            bottom: 100px;
+            bottom: 50%;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 15px 15px 5px 5px;
@@ -252,9 +194,9 @@
         .cake-top {
             position: absolute;
             width: 42%;
-            height: 40px;
+            height: 20%;
             background: linear-gradient(to right, #ffdd99, #ffeccc);
-            bottom: 150px;
+            bottom: 75%;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 50% 50% 5px 5px / 20% 20% 5px 5px;
@@ -264,7 +206,7 @@
         /* Frosting */
         .frosting {
             position: absolute;
-            height: 15px;
+            height: 7.5%;
             background: #fff;
             left: 50%;
             transform: translateX(-50%);
@@ -274,56 +216,23 @@
 
         .frosting-top {
             width: 46%;
-            bottom: 150px;
+            bottom: 75%;
             background: linear-gradient(to right, #ffffff, #f0f0f0);
         }
 
         .frosting-middle {
             width: 54%;
-            bottom: 100px;
+            bottom: 50%;
             background: linear-gradient(to right, #ffffff, #f0f0f0);
         }
 
-        /* Sprinkles */
-        .sprinkle {
-            position: absolute;
-            width: 5px;
-            height: 2px;
-            border-radius: 5px;
-            z-index: 2;
-        }
-
-        /* Cherry */
-        .cherry {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #ff3366;
-            border-radius: 50%;
-            bottom: 165px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 3;
-        }
-
-        .cherry-stem {
-            position: absolute;
-            width: 3px;
-            height: 15px;
-            background: #7d4d25;
-            bottom: 180px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-10deg);
-            z-index: 2;
-        }
-
+        /* Candle and flame with % positioning */
         .candle {
             position: absolute;
-            width: 6px;
-            height: 30px;
+            width: 3%;
+            height: 15%;
             background: linear-gradient(to top, #fdcbf1, #e6dee9);
-            bottom: 190px;
+            bottom: 95%;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 3px;
@@ -332,11 +241,11 @@
 
         .flame {
             position: absolute;
-            width: 15px;
-            height: 25px;
+            width: 7.5%;
+            height: 12.5%;
             background: linear-gradient(to top, #ff9a9e, #fad0c4);
             border-radius: 50% 50% 35% 35% / 50% 50% 35% 35%;
-            bottom: 220px;
+            bottom: 110%;
             left: 50%;
             transform: translateX(-50%);
             filter: drop-shadow(0 0 10px rgba(255, 177, 66, 0.8));
@@ -346,38 +255,170 @@
             z-index: 5;
         }
 
-        /* Adjust positioning for smaller screens */
-        @media (max-width: 375px) {
-            .cake-container {
-                width: min(180px, 70vw);
-                height: min(180px, 70vw);
-            }
-
-            .flame {
-                bottom: 210px;
-            }
-
-            .candle {
-                bottom: 180px;
-            }
-
-            .cherry {
-                bottom: 155px;
-            }
-
-            .cherry-stem {
-                bottom: 170px;
-            }
-
-            .cake-top {
-                bottom: 140px;
-            }
-
-            .frosting-top {
-                bottom: 140px;
-            }
+        /* Cherry with % positioning */
+        .cherry {
+            position: absolute;
+            width: 10%;
+            height: 10%;
+            background: #ff3366;
+            border-radius: 50%;
+            bottom: 82.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 3;
         }
 
+        .cherry-stem {
+            position: absolute;
+            width: 1.5%;
+            height: 7.5%;
+            background: #7d4d25;
+            bottom: 90%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-10deg);
+            z-index: 2;
+        }
+
+        /* Sprinkles with % positioning */
+        .sprinkle {
+            position: absolute;
+            width: 2.5%;
+            height: 1%;
+            border-radius: 5px;
+            z-index: 2;
+        }
+
+        /* Cute faces */
+        .face {
+            position: absolute;
+            z-index: 5;
+        }
+
+        .eyes {
+            position: absolute;
+            width: 2%;
+            height: 2%;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        .mouth {
+            position: absolute;
+            height: 1.5%;
+            width: 6%;
+            border-bottom: 1px solid #333;
+            border-radius: 50%;
+        }
+
+        /* Face on bottom layer */
+        .face-bottom {
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .face-bottom .eyes.left {
+            left: -4%;
+        }
+
+        .face-bottom .eyes.right {
+            right: -4%;
+        }
+
+        .face-bottom .mouth {
+            top: 4%;
+            left: -3%;
+        }
+
+        /* Face on middle layer */
+        .face-middle {
+            bottom: 49%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .face-middle .eyes.left {
+            left: -3.5%;
+        }
+
+        .face-middle .eyes.right {
+            right: -3.5%;
+        }
+
+        .face-middle .mouth {
+            top: 3.5%;
+            left: -3%;
+        }
+
+        /* Blush cheeks */
+        .blush {
+            position: absolute;
+            width: 4%;
+            height: 2.5%;
+            background: rgba(255, 166, 166, 0.6);
+            border-radius: 50%;
+        }
+
+        .face-bottom .blush.left {
+            bottom: 3%;
+            left: -6%;
+        }
+
+        .face-bottom .blush.right {
+            bottom: 3%;
+            right: -6%;
+        }
+
+        .face-middle .blush.left {
+            bottom: 2.5%;
+            left: -5%;
+        }
+
+        .face-middle .blush.right {
+            bottom: 2.5%;
+            right: -5%;
+        }
+
+        /* Cake ears */
+        .cake-ears {
+            position: absolute;
+            bottom: 68%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        .ear {
+            position: absolute;
+            width: 7.5%;
+            height: 10%;
+            background: #ffeccc;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .ear.left {
+            transform: rotate(-30deg);
+            left: -12.5%;
+        }
+
+        .ear.right {
+            transform: rotate(30deg);
+            right: -12.5%;
+        }
+
+        .ear-inner {
+            position: absolute;
+            width: 4%;
+            height: 6%;
+            background: #ffb8d9;
+            border-radius: 50% 50% 0 0;
+            top: 1.5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Button container */
         .button-container {
             display: flex;
             flex-direction: column;
@@ -387,6 +428,7 @@
             opacity: 0;
             animation: fadeIn 1s forwards 1.5s;
             width: 100%;
+            padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right);
         }
 
         .button {
@@ -411,7 +453,7 @@
             appearance: none;
         }
 
-        /* Fix for iOS button styling */
+        /* Fix iOS button appearance */
         .button:focus {
             outline: none;
         }
@@ -448,7 +490,7 @@
             transform: translateY(-1px);
         }
 
-        /* Updated message card with background image */
+        /* Message card */
         .message-card {
             position: relative;
             border-radius: 20px;
@@ -517,219 +559,6 @@
             animation: spin 2s infinite linear;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            25% {
-                transform: rotate(20deg);
-            }
-
-            75% {
-                transform: rotate(-20deg);
-            }
-
-            100% {
-                transform: rotate(0deg);
-            }
-        }
-
-        .cake-tooltip {
-            position: absolute;
-            top: -70px;
-            left: 50%;
-            transform: translateX(-50%) scale(0);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 10px 20px;
-            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-            color: hsl(var(--primary));
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-            z-index: 10;
-            width: min(200px, 80vw);
-            text-align: center;
-        }
-
-        .cake-tooltip.show {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-
-        .cake-tooltip:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid rgba(255, 255, 255, 0.95);
-        }
-
-        .confetti {
-            position: absolute;
-            z-index: -1;
-            opacity: 0;
-        }
-
-        .balloon {
-            position: fixed;
-            width: min(40px, 10vw);
-            height: min(50px, 12vw);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
-            animation: balloonFloat 10s linear forwards;
-            opacity: 0;
-            z-index: -1;
-        }
-
-        .balloon:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: min(40px, 10vw);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        /* Cute faces on the cake */
-        .face {
-            position: absolute;
-            z-index: 5;
-        }
-
-        .eyes {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #333;
-            border-radius: 50%;
-        }
-
-        .mouth {
-            position: absolute;
-            height: 3px;
-            width: 12px;
-            border-bottom: 2px solid #333;
-            border-radius: 50%;
-        }
-
-        /* Face on bottom layer - using percentages */
-        .face-bottom {
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .face-bottom .eyes.left {
-            left: -8px;
-        }
-
-        .face-bottom .eyes.right {
-            right: -8px;
-        }
-
-        .face-bottom .mouth {
-            top: 8px;
-            left: -6px;
-        }
-
-        /* Face on middle layer - using percentages */
-        .face-middle {
-            bottom: 49%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .face-middle .eyes.left {
-            left: -7px;
-        }
-
-        .face-middle .eyes.right {
-            right: -7px;
-        }
-
-        .face-middle .mouth {
-            top: 7px;
-            left: -6px;
-        }
-
-        /* Additional cute elements for the cake */
-        .cake-ears {
-            position: absolute;
-            bottom: 68%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 4;
-        }
-
-        .ear {
-            position: absolute;
-            width: 15px;
-            height: 20px;
-            background: #ffeccc;
-            border-radius: 50% 50% 0 0;
-        }
-
-        .ear.left {
-            transform: rotate(-30deg);
-            left: -25px;
-        }
-
-        .ear.right {
-            transform: rotate(30deg);
-            right: -25px;
-        }
-
-        .ear-inner {
-            position: absolute;
-            width: 8px;
-            height: 12px;
-            background: #ffb8d9;
-            border-radius: 50% 50% 0 0;
-            top: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* Blush cheeks */
-        .blush {
-            position: absolute;
-            width: 8px;
-            height: 5px;
-            background: rgba(255, 166, 166, 0.6);
-            border-radius: 50%;
-        }
-
-        .face-bottom .blush.left {
-            bottom: 6px;
-            left: -12px;
-        }
-
-        .face-bottom .blush.right {
-            bottom: 6px;
-            right: -12px;
-        }
-
-        .face-middle .blush.left {
-            bottom: 5px;
-            left: -10px;
-        }
-
-        .face-middle .blush.right {
-            bottom: 5px;
-            right: -10px;
-        }
-
         /* Picture gallery */
         .picture-container {
             position: relative;
@@ -775,35 +604,93 @@
             font-weight: 600;
         }
 
-        .hearts {
-            position: absolute;
-            z-index: 6;
+        /* Balloon */
+        .balloon {
+            position: fixed;
+            width: min(40px, 10vw);
+            height: min(50px, 12vw);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+            animation: balloonFloat 10s linear forwards;
+            opacity: 0;
+            z-index: -1;
         }
 
-        /* Sparkle animation */
-        .sparkle {
+        .balloon:after {
+            content: '';
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: white;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: min(40px, 10vw);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tooltip */
+        .cake-tooltip {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            color: hsl(var(--primary));
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            z-index: 10;
+            width: min(200px, 80vw);
+            text-align: center;
+        }
+
+        .cake-tooltip.show {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+
+        .cake-tooltip:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(255, 255, 255, 0.95);
+        }
+
+        /* Decorative circles */
+        .circle {
+            position: absolute;
             border-radius: 50%;
-            animation: sparkle 1.5s infinite ease-in-out;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -1;
         }
 
-        @keyframes sparkle {
-
-            0%,
-            100% {
-                opacity: 0;
-                transform: scale(0.1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
+        .circle-1 {
+            width: min(300px, 80vw);
+            height: min(300px, 80vw);
+            top: -150px;
+            right: -150px;
         }
 
+        .circle-2 {
+            width: min(200px, 60vw);
+            height: min(200px, 60vw);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        /* Animations */
         @keyframes slideUp {
             to {
                 transform: translateY(0);
@@ -873,129 +760,109 @@
             }
         }
 
-        @keyframes heartBeat {
+        @keyframes spin {
             0% {
-                transform: scale(1);
+                transform: rotate(0deg);
             }
 
             25% {
-                transform: scale(1.2);
-            }
-
-            50% {
-                transform: scale(1);
+                transform: rotate(20deg);
             }
 
             75% {
-                transform: scale(1.2);
+                transform: rotate(-20deg);
             }
 
             100% {
-                transform: scale(1);
+                transform: rotate(0deg);
             }
         }
 
-        /* Decorative circles */
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: -1;
-        }
-
-        .circle-1 {
-            width: min(300px, 80vw);
-            height: min(300px, 80vw);
-            top: -150px;
-            right: -150px;
-        }
-
-        .circle-2 {
-            width: min(200px, 60vw);
-            height: min(200px, 60vw);
-            bottom: -100px;
-            left: -100px;
-        }
-
-        /* Fix for iPhone notch and safe areas */
-        @supports (padding: max(0px)) {
-            body {
-                padding-left: max(1rem, env(safe-area-inset-left));
-                padding-right: max(1rem, env(safe-area-inset-right));
-                padding-top: max(1rem, env(safe-area-inset-top));
-                padding-bottom: max(1rem, env(safe-area-inset-bottom));
-            }
-        }
-
-        /* Universal device compatibility */
-        @media only screen and (max-width: 480px) {
+        /* Media queries for different device sizes */
+        /* iPhone SE and smaller devices */
+        @media screen and (max-width: 375px) {
             .cake-container {
-                transform: scale(0.9);
-            }
-
-            .button-container {
-                gap: 0.5rem;
+                width: min(180px, 60vw);
+                height: min(180px, 60vw);
             }
 
             .button {
                 padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .message-text {
+                font-size: 0.9rem;
+            }
+
+            .message-highlight {
+                font-size: 1.1rem;
             }
         }
 
-        /* Modern iPhone compatibility section */
-        /* iPhone X through iPhone 15 Pro Max */
-        @supports (padding: env(safe-area-inset-top)) {
+        /* iPhone X through 12/13 Mini */
+        @media screen and (min-width: 376px) and (max-width: 390px) {
             .container {
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: max(1rem, env(safe-area-inset-bottom));
-                padding-left: max(1rem, env(safe-area-inset-left));
-                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-top: max(1rem, env(safe-area-inset-top));
+            }
+
+            .cake-container {
+                width: min(190px, 60vw);
+                height: min(190px, 60vw);
+            }
+        }
+
+        /* iPhone 12/13 Pro, 14/15 */
+        @media screen and (min-width: 391px) and (max-width: 428px) {
+            .container {
+                padding-top: max(1.2rem, env(safe-area-inset-top));
+            }
+
+            .cake-container {
+                width: min(200px, 55vw);
+                height: min(200px, 55vw);
+            }
+        }
+
+        /* iPhone 12/13/14/15 Pro Max and larger Android devices */
+        @media screen and (min-width: 429px) {
+            .container {
+                padding-top: max(1.5rem, env(safe-area-inset-top));
+            }
+
+            .cake-container {
+                width: min(220px, 50vw);
+                height: min(220px, 50vw);
+            }
+
+            .button {
+                padding: 0.9rem 1.3rem;
             }
         }
 
         /* Dynamic Island / Notch-specific adjustments */
-        @media only screen and (device-width: 393px) and (device-height: 852px),
-        only screen and (device-width: 428px) and (device-height: 926px),
-        only screen and (device-width: 430px) and (device-height: 932px) {
+        @media only screen and (device-width: 390px) and (device-height: 844px),
+        only screen and (device-width: 393px) and (device-height: 852px),
+        only screen and (device-width: 430px) and (device-height: 932px),
+        only screen and (device-width: 428px) and (device-height: 926px) {
             .container {
-                padding-top: max(20px, env(safe-area-inset-top));
+                padding-top: max(2rem, env(safe-area-inset-top));
             }
         }
 
-        /* Additional smartphone compatibility */
-        /* Samsung, Google Pixel, and other Android devices */
-        @media only screen and (max-width: 412px) {
-            .cake-container {
-                margin-bottom: 1.5rem;
-            }
-
-            .birthday-text {
-                font-size: clamp(1.1rem, 5vw, 2.2rem);
-            }
-        }
-
-        /* Fix viewport height issues on mobile browsers */
-        :root {
-            --vh: 1vh;
-        }
-
-        @media (max-width: 480px) {
-            .background {
-                height: calc(100 * var(--vh));
-            }
-
-            body {
-                min-height: calc(100 * var(--vh));
-            }
-        }
-
-        /* Add this viewport height fix script to be included */
-        /* This should be added via JavaScript:
-window.addEventListener('resize', () => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+        /* Add this JS to be included in a script tag */
+        /* 
+document.addEventListener('DOMContentLoaded', function() {
+    // Fix viewport height for mobile browsers
+    function setViewportHeight() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    // Call initially and on resize
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
 });
 */
     </style>
@@ -1331,6 +1198,19 @@ window.addEventListener('resize', () => {
             addRandomSprinkles();
             addSparkles();
             animateHearts();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fix viewport height for mobile browsers
+            function setViewportHeight() {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+
+            // Call initially and on resize
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+            window.addEventListener('orientationchange', setViewportHeight);
         });
     </script>
 </body>
