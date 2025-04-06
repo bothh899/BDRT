@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Happy Birthday Narita!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@400;600;700&display=swap');
@@ -21,6 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -33,7 +35,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding-top: 1rem;
+            padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem);
         }
 
         .background {
@@ -52,10 +54,11 @@
             padding: 1rem;
             text-align: center;
             position: relative;
+            margin-top: env(safe-area-inset-top, 0);
         }
 
         .birthday-text {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
             font-weight: 800;
             margin-bottom: 0.1rem;
             background: rgb(255, 255, 255);
@@ -68,7 +71,7 @@
         }
 
         .date {
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
             font-weight: 600;
             color: white;
             margin-bottom: 2rem;
@@ -78,8 +81,8 @@
 
         .cake-container {
             position: relative;
-            width: min(240px, 80vw);
-            height: min(240px, 80vw);
+            width: min(200px, 70vw);
+            height: min(200px, 70vw);
             margin: 0 auto 2rem;
             perspective: 1000px;
             cursor: pointer;
@@ -97,6 +100,10 @@
         }
 
         .cake-container:hover .cake {
+            transform: rotateY(15deg) rotateX(5deg);
+        }
+
+        .cake-container:active .cake {
             transform: rotateY(15deg) rotateX(5deg);
         }
 
@@ -233,23 +240,56 @@
             z-index: 5;
         }
 
+        /* Adjust positioning for smaller screens */
+        @media (max-width: 375px) {
+            .cake-container {
+                width: min(180px, 70vw);
+                height: min(180px, 70vw);
+            }
+
+            .flame {
+                bottom: 210px;
+            }
+
+            .candle {
+                bottom: 180px;
+            }
+
+            .cherry {
+                bottom: 155px;
+            }
+
+            .cherry-stem {
+                bottom: 170px;
+            }
+
+            .cake-top {
+                bottom: 140px;
+            }
+
+            .frosting-top {
+                bottom: 140px;
+            }
+        }
+
         .button-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             gap: 0.75rem;
             margin-top: 1rem;
             opacity: 0;
             animation: fadeIn 1s forwards 1.5s;
+            width: 100%;
         }
 
         .button {
-            padding: 0.6rem 1.2rem;
+            padding: 0.8rem 1.2rem;
             border: none;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             color: white;
             background-size: 300% 100%;
             transition: all 0.4s ease;
@@ -257,6 +297,17 @@
             outline: none;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Fix for iOS button styling */
+        .button:focus {
+            outline: none;
         }
 
         .button.celebrate {
@@ -286,13 +337,18 @@
             transform: translateY(-3px);
         }
 
+        .button:active {
+            background-position: right center;
+            transform: translateY(-1px);
+        }
+
         /* Updated message card with background image */
         .message-card {
             position: relative;
             border-radius: 20px;
             padding: 1.5rem;
             margin: 2rem auto;
-            max-width: 90%;
+            max-width: 100%;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             opacity: 0;
             transform: scale(0.9);
@@ -317,6 +373,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
             z-index: -1;
         }
 
@@ -327,7 +384,7 @@
         }
 
         .message-text {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             line-height: 1.6;
             color: white;
             margin-bottom: 1rem;
@@ -337,7 +394,7 @@
         }
 
         .message-highlight {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
             font-weight: 700;
             color: #ffccea;
             margin: 1.5rem 0;
@@ -379,6 +436,7 @@
             transform: translateX(-50%) scale(0);
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 10px 20px;
             font-size: clamp(0.8rem, 2.5vw, 0.9rem);
@@ -571,10 +629,11 @@
             position: relative;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 1.5rem;
             margin: 2rem auto;
-            max-width: 90%;
+            max-width: 100%;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             opacity: 0;
             transform: scale(0.9);
@@ -736,6 +795,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             z-index: -1;
         }
 
@@ -753,44 +813,6 @@
             left: -100px;
         }
 
-        /* Additional media queries for specific screen sizes */
-        @media (max-width: 480px) {
-            .button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .button {
-                width: 100%;
-                max-width: 250px;
-            }
-
-            .cake-container {
-                margin-bottom: 1.5rem;
-            }
-
-            /* Adjust positioning for smaller screens */
-            .flame {
-                bottom: 190px;
-            }
-
-            .candle {
-                bottom: 170px;
-            }
-        }
-
-        /* Touch device optimizations */
-        @media (hover: none) {
-            .cake-container:active .cake {
-                transform: rotateY(15deg) rotateX(5deg);
-            }
-
-            .button:active {
-                background-position: right center;
-                transform: translateY(-3px);
-            }
-        }
-
         /* Fix for iPhone notch and safe areas */
         @supports (padding: max(0px)) {
             body {
@@ -798,6 +820,125 @@
                 padding-right: max(1rem, env(safe-area-inset-right));
                 padding-top: max(1rem, env(safe-area-inset-top));
                 padding-bottom: max(1rem, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* iPhone SE specific adjustments */
+        @media only screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) {
+            .cake-container {
+                width: 160px;
+                height: 160px;
+            }
+
+            .cake-bottom {
+                height: 50px;
+            }
+
+            .cake-middle {
+                height: 40px;
+                bottom: 90px;
+            }
+
+            .cake-top {
+                height: 30px;
+                bottom: 130px;
+            }
+
+            .frosting-middle {
+                bottom: 90px;
+            }
+
+            .frosting-top {
+                bottom: 130px;
+            }
+
+            .candle {
+                bottom: 160px;
+            }
+
+            .flame {
+                bottom: 190px;
+            }
+        }
+
+        /* iPhone X/XS/11 Pro specific adjustments */
+        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 10px;
+            }
+        }
+
+        /* iPhone XR/11 specific adjustments */
+        @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+            .container {
+                padding-top: 15px;
+            }
+        }
+
+        /* iPhone 12/13 mini specific adjustments */
+        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 10px;
+            }
+        }
+
+        /* iPhone 12/13 Pro specific adjustments */
+        @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 15px;
+            }
+        }
+
+        /* iPhone 12/13 Pro Max specific adjustments */
+        @media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 20px;
+            }
+        }
+
+        /* iPhone 14 specific adjustments */
+        @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 15px;
+            }
+        }
+
+        /* iPhone 14 Plus and iPhone 14 Pro Max specific adjustments */
+        @media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 20px;
+            }
+        }
+
+        /* iPhone 14 Pro specific adjustments - for the Dynamic Island */
+        @media only screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 60px;
+            }
+        }
+
+        /* iPhone 15 Family specific adjustments */
+        @media only screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 15px;
+            }
+        }
+
+        /* Fix for iPhone 15 Pro Max and iPhone 15 Plus */
+        @media only screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
+            .container {
+                padding-top: 20px;
+            }
+        }
+
+        /* Additional fixes for all modern iPhones with notches/Dynamic Island */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+            .birthday-text {
+                font-size: clamp(1.2rem, 4.5vw, 2.2rem);
+            }
+
+            .date {
+                font-size: clamp(0.8rem, 2.8vw, 1.1rem);
             }
         }
     </style>
