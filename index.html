@@ -35,7 +35,53 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
+
+            /* Improved iOS viewport handling */
             padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem);
+            box-sizing: border-box;
+
+            /* Prevent iOS text size adjustment */
+            -webkit-text-size-adjust: 100%;
+
+            /* Fix for iOS momentum scrolling */
+            -webkit-overflow-scrolling: touch;
+
+            /* iPhone notch handling */
+            padding-top: max(1rem, env(safe-area-inset-top));
+            padding-right: max(1rem, env(safe-area-inset-right));
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
+            padding-left: max(1rem, env(safe-area-inset-left));
+
+            /* Prevent iOS pinch zoom */
+            touch-action: pan-x pan-y;
+        }
+
+        @media screen and (max-width: 428px) {
+
+            /* iPhone 13 Pro Max width is 428px */
+            body {
+                font-size: 16px;
+                /* Ensure readable text size */
+                align-items: center;
+                /* Center content on small screens */
+            }
+        }
+
+        @media screen and (max-width: 390px) {
+
+            /* iPhone 13/14 width is 390px */
+            body {
+                padding: max(0.5rem, env(safe-area-inset-top)) max(0.5rem, env(safe-area-inset-right)) max(0.5rem, env(safe-area-inset-bottom)) max(0.5rem, env(safe-area-inset-left));
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+
+            /* iOS-specific fixes */
+            body {
+                /* Prevent content from going under the home indicator on iPhone X and newer */
+                margin-bottom: env(safe-area-inset-bottom);
+            }
         }
 
         .background {
