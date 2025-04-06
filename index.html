@@ -28,10 +28,12 @@
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
-            height: 100vh;
+            min-height: 100vh;
+            width: 100%;
             display: flex;
             justify-content: center;
-            align-items: Top;
+            align-items: flex-start;
+            padding-top: 1rem;
         }
 
         .background {
@@ -53,7 +55,7 @@
         }
 
         .birthday-text {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             font-weight: 800;
             margin-bottom: 0.1rem;
             background: rgb(255, 255, 255);
@@ -65,14 +67,8 @@
             animation: slideUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
 
-        @media (max-width: 768px) {
-            .birthday-text {
-                font-size: 2rem;
-            }
-        }
-
         .date {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             font-weight: 600;
             color: white;
             margin-bottom: 2rem;
@@ -82,8 +78,8 @@
 
         .cake-container {
             position: relative;
-            width: 240px;
-            height: 240px;
+            width: min(240px, 80vw);
+            height: min(240px, 80vw);
             margin: 0 auto 2rem;
             perspective: 1000px;
             cursor: pointer;
@@ -106,7 +102,7 @@
 
         .plate {
             position: absolute;
-            width: 180px;
+            width: 75%;
             height: 20px;
             border-radius: 50%;
             background: #f0f0f0;
@@ -118,7 +114,7 @@
 
         .cake-bottom {
             position: absolute;
-            width: 140px;
+            width: 58%;
             height: 60px;
             background: linear-gradient(to right, #ffb8d9, #ffccea);
             bottom: 40px;
@@ -130,7 +126,7 @@
 
         .cake-middle {
             position: absolute;
-            width: 120px;
+            width: 50%;
             height: 50px;
             background: linear-gradient(to right, #b8d7ff, #c9e4ff);
             bottom: 100px;
@@ -142,7 +138,7 @@
 
         .cake-top {
             position: absolute;
-            width: 100px;
+            width: 42%;
             height: 40px;
             background: linear-gradient(to right, #ffdd99, #ffeccc);
             bottom: 150px;
@@ -164,13 +160,13 @@
         }
 
         .frosting-top {
-            width: 110px;
+            width: 46%;
             bottom: 150px;
             background: linear-gradient(to right, #ffffff, #f0f0f0);
         }
 
         .frosting-middle {
-            width: 130px;
+            width: 54%;
             bottom: 100px;
             background: linear-gradient(to right, #ffffff, #f0f0f0);
         }
@@ -241,19 +237,19 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
             margin-top: 1rem;
             opacity: 0;
             animation: fadeIn 1s forwards 1.5s;
         }
 
         .button {
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border: none;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             color: white;
             background-size: 300% 100%;
             transition: all 0.4s ease;
@@ -294,7 +290,7 @@
         .message-card {
             position: relative;
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
             margin: 2rem auto;
             max-width: 90%;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -331,7 +327,7 @@
         }
 
         .message-text {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             line-height: 1.6;
             color: white;
             margin-bottom: 1rem;
@@ -341,7 +337,7 @@
         }
 
         .message-highlight {
-            font-size: 1.8rem;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 700;
             color: #ffccea;
             margin: 1.5rem 0;
@@ -352,7 +348,7 @@
         }
 
         .message-emoji {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             display: inline-block;
             margin: 0 0.2rem;
             animation: spin 2s infinite linear;
@@ -385,7 +381,7 @@
             backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 10px 20px;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             color: var(--primary);
             font-weight: 600;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -393,6 +389,8 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
             z-index: 10;
+            width: min(200px, 80vw);
+            text-align: center;
         }
 
         .cake-tooltip.show {
@@ -419,8 +417,8 @@
 
         .balloon {
             position: fixed;
-            width: 40px;
-            height: 50px;
+            width: min(40px, 10vw);
+            height: min(50px, 12vw);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
             animation: balloonFloat 10s linear forwards;
@@ -435,7 +433,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            height: 40px;
+            height: min(40px, 10vw);
             background: rgba(0, 0, 0, 0.2);
         }
 
@@ -461,9 +459,9 @@
             border-radius: 50%;
         }
 
-        /* Face on bottom layer */
+        /* Face on bottom layer - using percentages */
         .face-bottom {
-            bottom: 60px;
+            bottom: 25%;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -481,9 +479,9 @@
             left: -6px;
         }
 
-        /* Face on middle layer */
+        /* Face on middle layer - using percentages */
         .face-middle {
-            bottom: 118px;
+            bottom: 49%;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -504,7 +502,7 @@
         /* Additional cute elements for the cake */
         .cake-ears {
             position: absolute;
-            bottom: 163px;
+            bottom: 68%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 4;
@@ -594,7 +592,7 @@
             margin: 0 auto;
             width: 100%;
             max-width: 400px;
-            height: 300px;
+            height: min(300px, 60vw);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -608,7 +606,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             font-weight: 600;
         }
 
@@ -742,17 +740,65 @@
         }
 
         .circle-1 {
-            width: 300px;
-            height: 300px;
+            width: min(300px, 80vw);
+            height: min(300px, 80vw);
             top: -150px;
             right: -150px;
         }
 
         .circle-2 {
-            width: 200px;
-            height: 200px;
+            width: min(200px, 60vw);
+            height: min(200px, 60vw);
             bottom: -100px;
             left: -100px;
+        }
+
+        /* Additional media queries for specific screen sizes */
+        @media (max-width: 480px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .cake-container {
+                margin-bottom: 1.5rem;
+            }
+
+            /* Adjust positioning for smaller screens */
+            .flame {
+                bottom: 190px;
+            }
+
+            .candle {
+                bottom: 170px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .cake-container:active .cake {
+                transform: rotateY(15deg) rotateX(5deg);
+            }
+
+            .button:active {
+                background-position: right center;
+                transform: translateY(-3px);
+            }
+        }
+
+        /* Fix for iPhone notch and safe areas */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-top: max(1rem, env(safe-area-inset-top));
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+            }
         }
     </style>
 </head>
@@ -1046,34 +1092,8 @@
                 });
             };
 
-            // Add tooltip functionality
-            let tooltipTimeout;
-            cakeContainer.addEventListener('mouseenter', () => {
-                clearTimeout(tooltipTimeout);
-
-                if (!document.querySelector('.cake-tooltip')) {
-                    const tooltip = document.createElement('div');
-                    tooltip.classList.add('cake-tooltip');
-                    tooltip.textContent = 'Click to blow out the candle!';
-                    cakeContainer.appendChild(tooltip);
-
-                    setTimeout(() => {
-                        tooltip.classList.add('show');
-                    }, 100);
-                }
-            });
-
-            cakeContainer.addEventListener('mouseleave', () => {
-                const tooltip = document.querySelector('.cake-tooltip');
-                if (tooltip) {
-                    tooltip.classList.remove('show');
-                    tooltipTimeout = setTimeout(() => {
-                        if (tooltip.parentNode) {
-                            tooltip.parentNode.removeChild(tooltip);
-                        }
-                    }, 300);
-                }
-            });
+            // Remove tooltip functionality entirely
+            // No more tooltip code here
 
             // Event Listeners
             cakeContainer.addEventListener('click', () => {
