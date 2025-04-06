@@ -7,53 +7,91 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Happy Birthday Narita!</title>
     <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@400;600;700&display=swap');
 
         :root {
-            --primary: #ff85a2;
-            --secondary: #ffa8d3;
-            --accent: #a991ff;
-            --light: #f8f9fa;
-            --dark: #2d3436;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+
+            --primary: 341 100% 76%;
+            /* #ff85a2 */
+            --primary-foreground: 210 40% 98%;
+
+            --secondary: 327 100% 83%;
+            /* #ffa8d3 */
+            --secondary-foreground: 222.2 47.4% 11.2%;
+
+            --accent: 255 100% 78%;
+            /* #a991ff */
+            --accent-foreground: 222.2 47.4% 11.2%;
+
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+
+            --radius: 0.5rem;
+
+            --light: 0 0% 97%;
+            --dark: 207 13% 21%;
+            --gradient: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        @layer base {
+            * {
+                @apply border-border;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                -webkit-tap-highlight-color: transparent;
+            }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            overflow-x: hidden;
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            body {
+                @apply bg-background text-foreground;
+                font-family: 'Poppins', sans-serif;
+                background-color: hsl(var(--light));
+                color: hsl(var(--dark));
+                overflow-x: hidden;
+                min-height: 100vh;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
 
-            /* Improved iOS viewport handling */
-            padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem);
-            box-sizing: border-box;
+                /* Improved iOS viewport handling */
+                padding: env(safe-area-inset-top, 1rem) env(safe-area-inset-right, 1rem) env(safe-area-inset-bottom, 1rem) env(safe-area-inset-left, 1rem);
+                box-sizing: border-box;
 
-            /* Prevent iOS text size adjustment */
-            -webkit-text-size-adjust: 100%;
+                /* Prevent iOS text size adjustment */
+                -webkit-text-size-adjust: 100%;
 
-            /* Fix for iOS momentum scrolling */
-            -webkit-overflow-scrolling: touch;
+                /* Fix for iOS momentum scrolling */
+                -webkit-overflow-scrolling: touch;
 
-            /* iPhone notch handling */
-            padding-top: max(1rem, env(safe-area-inset-top));
-            padding-right: max(1rem, env(safe-area-inset-right));
-            padding-bottom: max(1rem, env(safe-area-inset-bottom));
-            padding-left: max(1rem, env(safe-area-inset-left));
+                /* iPhone notch handling */
+                padding-top: max(1rem, env(safe-area-inset-top));
+                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+                padding-left: max(1rem, env(safe-area-inset-left));
 
-            /* Prevent iOS pinch zoom */
-            touch-action: pan-x pan-y;
+                /* Prevent iOS pinch zoom */
+                touch-action: pan-x pan-y;
+            }
         }
 
         @media screen and (max-width: 428px) {
@@ -508,7 +546,7 @@
             border-radius: 15px;
             padding: 10px 20px;
             font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-            color: var(--primary);
+            color: hsl(var(--primary));
             font-weight: 600;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             opacity: 0;
@@ -891,124 +929,75 @@
             }
         }
 
-        /* iPhone SE specific adjustments */
-        @media only screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) {
+        /* Universal device compatibility */
+        @media only screen and (max-width: 480px) {
             .cake-container {
-                width: 160px;
-                height: 160px;
+                transform: scale(0.9);
             }
 
-            .cake-bottom {
-                height: 50px;
+            .button-container {
+                gap: 0.5rem;
             }
 
-            .cake-middle {
-                height: 40px;
-                bottom: 90px;
-            }
-
-            .cake-top {
-                height: 30px;
-                bottom: 130px;
-            }
-
-            .frosting-middle {
-                bottom: 90px;
-            }
-
-            .frosting-top {
-                bottom: 130px;
-            }
-
-            .candle {
-                bottom: 160px;
-            }
-
-            .flame {
-                bottom: 190px;
+            .button {
+                padding: 0.7rem 1rem;
             }
         }
 
-        /* iPhone X/XS/11 Pro specific adjustments */
-        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+        /* Modern iPhone compatibility section */
+        /* iPhone X through iPhone 15 Pro Max */
+        @supports (padding: env(safe-area-inset-top)) {
             .container {
-                padding-top: 10px;
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
             }
         }
 
-        /* iPhone XR/11 specific adjustments */
-        @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+        /* Dynamic Island / Notch-specific adjustments */
+        @media only screen and (device-width: 393px) and (device-height: 852px),
+        only screen and (device-width: 428px) and (device-height: 926px),
+        only screen and (device-width: 430px) and (device-height: 932px) {
             .container {
-                padding-top: 15px;
+                padding-top: max(20px, env(safe-area-inset-top));
             }
         }
 
-        /* iPhone 12/13 mini specific adjustments */
-        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 10px;
+        /* Additional smartphone compatibility */
+        /* Samsung, Google Pixel, and other Android devices */
+        @media only screen and (max-width: 412px) {
+            .cake-container {
+                margin-bottom: 1.5rem;
             }
-        }
 
-        /* iPhone 12/13 Pro specific adjustments */
-        @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 15px;
-            }
-        }
-
-        /* iPhone 12/13 Pro Max specific adjustments */
-        @media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 20px;
-            }
-        }
-
-        /* iPhone 14 specific adjustments */
-        @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 15px;
-            }
-        }
-
-        /* iPhone 14 Plus and iPhone 14 Pro Max specific adjustments */
-        @media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 20px;
-            }
-        }
-
-        /* iPhone 14 Pro specific adjustments - for the Dynamic Island */
-        @media only screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 60px;
-            }
-        }
-
-        /* iPhone 15 Family specific adjustments */
-        @media only screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 15px;
-            }
-        }
-
-        /* Fix for iPhone 15 Pro Max and iPhone 15 Plus */
-        @media only screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
-            .container {
-                padding-top: 20px;
-            }
-        }
-
-        /* Additional fixes for all modern iPhones with notches/Dynamic Island */
-        @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
             .birthday-text {
-                font-size: clamp(1.2rem, 4.5vw, 2.2rem);
-            }
-
-            .date {
-                font-size: clamp(0.8rem, 2.8vw, 1.1rem);
+                font-size: clamp(1.1rem, 5vw, 2.2rem);
             }
         }
+
+        /* Fix viewport height issues on mobile browsers */
+        :root {
+            --vh: 1vh;
+        }
+
+        @media (max-width: 480px) {
+            .background {
+                height: calc(100 * var(--vh));
+            }
+
+            body {
+                min-height: calc(100 * var(--vh));
+            }
+        }
+
+        /* Add this viewport height fix script to be included */
+        /* This should be added via JavaScript:
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+*/
     </style>
 </head>
 
